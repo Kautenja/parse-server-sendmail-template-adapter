@@ -20,6 +20,12 @@
         "sendmail",
         "templates"
     ],
+    "files":
+    [
+        "LICENSE",
+        "README.md",
+        "index.js"
+    ],
     "author": "Christian Kauten <kautencreations@gmail.com>",
     "license": "MIT",
     "bugs":
@@ -29,7 +35,10 @@
     "homepage": "https://github.com/Kautenja/parse-server-sendmail-template-adapter#readme",
     "dependencies":
     {
-        "sendmail": "^0.2.2",
+        "sendmail": "^0.2.2"
+    },
+    "devDependencies":
+    {
         "mocha": "*",
         "chai": "*"
     }
