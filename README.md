@@ -4,10 +4,9 @@
 
 This mail adapter for
 [Parse Server](https://github.com/parse-community/parse-server) uses
-[sendmail](https://www.npmjs.com/package/sendmail) to send HTML template based
-emails.
+[sendmail](https://www.npmjs.com/package/sendmail) to send emails.
 
-This code is derived from
+This code is inspired by
 [parse-server-sendmail-adapter](https://www.npmjs.com/package/parse-server-sendmail-adapter).
 
 ## Installation ##
