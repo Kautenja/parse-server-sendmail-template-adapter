@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 // this adapter uses `sendmail` to transmit emails
 var sendmail = require('sendmail')();
 var fs = require('fs');
@@ -98,7 +99,7 @@ var SendmailTemplateAdapter = sendmailOptions =>
 				resolve(reply);
 			});
 		});
-	}
+	};
 
 	/**
 	 * Send a password reset email with the given objects
@@ -125,7 +126,7 @@ var SendmailTemplateAdapter = sendmailOptions =>
 				resolve(reply);
 			});
 		});
-	}
+	};
 
 	/**
 	 * Send a custom email with the given objects
@@ -152,7 +153,7 @@ var SendmailTemplateAdapter = sendmailOptions =>
 				resolve(reply);
 			});
 		});
-	}
+	};
 
 	// return an immutable form of this object
 	return Object.freeze(
@@ -162,6 +163,6 @@ var SendmailTemplateAdapter = sendmailOptions =>
 		sendPasswordResetEmail: sendPasswordResetEmail,
 		sendMail: sendMail
 	});
-}
+};
 // export the adapter
-module.exports = SendmailTemplateAdapter
+module.exports = SendmailTemplateAdapter;

@@ -35,7 +35,7 @@ describe('initialize with `fromAddress` missing in options object', function()
         // options with nothing in them
         var options = {};
         // the function to initialize the adapter
-        var initializer = function() { MailAdapter(options); }
+        var initializer = function() { MailAdapter(options); };
         // expect the initializer to throw an error
         expect(initializer).to.throw(Error);
     });
