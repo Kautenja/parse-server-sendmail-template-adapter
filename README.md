@@ -1,6 +1,21 @@
 # parse-server-sendmail-template-adapter #
 
-[![npm version](https://img.shields.io/npm/v/parse-server-sendmail-template-adapter.svg?style=flat)](https://www.npmjs.com/package/parse-server-sendmail-template-adapter)
+[![npm][npm-image]][npm-url]
+[![build-status][travis-image]][travis-url]
+[![downloads][downloads-image]][downloads-url]
+[![npm-issues][npm-issues-image]][npm-issues-url]
+[![js-standard-style][standard-image]][standard-url]
+
+[travis-image]: https://travis-ci.org/Kautenja/parse-server-sendmail-template-adapter.svg?branch=master
+[travis-url]: https://travis-ci.org/Kautenja/parse-server-sendmail-template-adapter
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[standard-url]: http://standardjs.com/
+[npm-image]: https://img.shields.io/npm/v/parse-server-sendmail-template-adapter.svg?style=flat
+[npm-url]: https://npmjs.org/package/parse-server-sendmail-template-adapter
+[downloads-image]: https://img.shields.io/npm/dt/parse-server-sendmail-template-adapter.svg?style=flat
+[downloads-url]: https://npmjs.org/package/parse-server-sendmail-template-adapter
+[npm-issues-image]: https://img.shields.io/github/issues/Kautenja/parse-server-sendmail-template-adapter.svg
+[npm-issues-url]: https://github.com/Kautenja/parse-server-sendmail-template-adapter/issues
 
 This mail adapter for
 [Parse Server](https://github.com/parse-community/parse-server) uses
