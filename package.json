@@ -35,7 +35,7 @@
     "homepage": "https://github.com/Kautenja/parse-server-sendmail-template-adapter#readme",
     "dependencies":
     {
-        "sendmail": "^0.2.2"
+        "sendmail": "1.1.1"
     },
     "devDependencies":
     {
