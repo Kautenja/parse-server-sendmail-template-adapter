@@ -1,6 +1,6 @@
 # parse-server-sendmail-template-adapter #
 
-<!-- [![npm version](https://img.shields.io/npm/v/parse-server-sendmail-adapter.svg?style=flat)](https://www.npmjs.com/package/parse-server-sendmail-adapter) -->
+[![npm version](https://img.shields.io/npm/v/parse-server-sendmail-template-adapter.svg?style=flat)](https://www.npmjs.com/package/parse-server-sendmail-template-adapter)
 
 This mail adapter for
 [Parse Server](https://github.com/parse-community/parse-server) uses
