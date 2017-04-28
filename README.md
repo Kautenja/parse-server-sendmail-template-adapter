@@ -17,7 +17,7 @@ your project's `package.json` file.
 ```json
 "dependencies":
 {
-    "parse-server-sendmail-template-adapter": "^1.0"
+    "parse-server-sendmail-template-adapter": "^1.0.0"
 }
 ```
 
@@ -57,7 +57,7 @@ mail adapter with text files, HTML templates, or inline strings.
 
 #### Simple example ####
 
-This examples uses the default verification and password reset subjects and
+This example uses the default verification and password reset subjects and
 bodies.
 
 ```javascript
