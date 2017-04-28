@@ -1,5 +1,6 @@
 // this adapter uses `sendmail` to transmit emails
 var sendmail = require('sendmail')();
+var fs = require('fs');
 
 // default values for verification emails
 // the subject of the email
@@ -23,20 +24,37 @@ You requested a password reset for %appname%.
 Click here to reset it:
 %link%`;
 
+// the error for intializing an adapter without an email
+var ERR_MISSING_EMAIL = Error('parse-server-sendmail-template-adapter requires a fromAddress.');
+
 // setup a new adapter with the given options
 var SendmailTemplateAdapter = sendmailOptions =>
 {
 	// ensure a from address is supplied
-	if (!sendmailOptions.fromAddress)
+	if (!sendmailOptions.fromAddress) throw ERR_MISSING_EMAIL;
+
+	/**
+	 * Try to open body as if it were a file and return the contents, otherwise
+	 * try to return body if it is not None, otherwise return defaultValue
+	 * @param  {string} body         either a filename or plain text/html contents for an email
+	 * @param  {string} defaultValue the default value if body is None
+	 * @return {string} the open or replaced values of body
+	 */
+	function openReplace(body, defaultValue)
 	{
-		throw 'SendmailTemplateAdapter requires fromAddress.';
+		// if the body is a file open it and read it
+		if (fs.existsSync(body)) { return fs.readFileSync(body, 'utf8'); }
+		// otherwise check if its None and reassign to the default if necessary
+		else { return body || defaultValue; }
 	}
 
-	// replace templates with defaults if they are None
+	// replace the subject of the verification with the default if it is None.
 	sendmailOptions.verificationSubject = sendmailOptions.verificationSubject || VERIF_SUBJECT;
-	sendmailOptions.verificationBody = sendmailOptions.verificationBody || VERIF_BODY;
+	sendmailOptions.verificationBody = openReplace(sendmailOptions.verificationBody, VERIF_BODY);
+
+	// replace the subject of the password reset with the default if it is None.
 	sendmailOptions.passwordResetSubject = sendmailOptions.passwordResetSubject || PWRD_SUBJECT;
-	sendmailOptions.passwordResetBody = sendmailOptions.passwordResetBody || PWRD_BODY;
+	sendmailOptions.passwordResetBody = openReplace(sendmailOptions.passwordResetBody, PWRD_BODY);
 
 	/**
 	 * Replace the variables in the string with the given data options and
@@ -123,7 +141,7 @@ var SendmailTemplateAdapter = sendmailOptions =>
 				from: sendmailOptions.fromAddress,
 				to: mail.to,
 				subject: mail.subject,
-				html: mail.text
+				html: openReplace(mail.text, '')
 			},
 			function(err, reply)
 			{
@@ -139,6 +157,7 @@ var SendmailTemplateAdapter = sendmailOptions =>
 	// return an immutable form of this object
 	return Object.freeze(
 	{
+		options: sendmailOptions,
 		sendVerificationEmail: sendVerificationEmail,
 		sendPasswordResetEmail: sendPasswordResetEmail,
 		sendMail: sendMail
