@@ -40,7 +40,7 @@ your project's `package.json` file.
 
 The initializer takes a single object parameter with the following fields:
 
-| Field Name             | Explanation                                                              |
+| Field Name             | Description                                                              |
 |:-----------------------|--------------------------------------------------------------------------|
 | `fromAddress`          | the address to send from (i.e. _noreply@yourdomain.com_)                 |
 | `verificationSubject`  | the subject for new account verification emails                          |
@@ -135,14 +135,26 @@ var emailAdapter =
 };
 ```
 
-#### Example using custom user fields ####
+### Templates ###
 
-This example uses custom fields from the user object in its templates. to access
-the values in `userField` in a template surround it with %s. i.e. if a user is sent
-an email using the following template it would be replaced with items from the
-receiving users object. i.e for the theoretical parse user Jacob Smith:
+The adapter uses templating to use generalized email formats to provide unique
+information to users. By default there are 4 items that can be used in templates:
 
-Hi %firstName% %lastName%! -> Hi Jacob Smith!
+| Template Key | Description                                                             |
+|:-------------|:------------------------------------------------------------------------|
+| `%appname%`  | The name of the app as it appears in the Parse Server configuration     |
+| `%link%`     | The unique link to provide in the email for web app feature integration |
+| `%username%` | The username of the user receiving an email                             |
+| `%email%`    | The email address of the user receiving an email                        |
+
+#### Example using custom user fields in templates ####
+
+This example uses custom fields from the user object in its templates. to
+access the dynamic values in `userField` in a template, surround it with %s.
+i.e. if a user is sent an email using the following template it would be
+replaced with items from the user object.
+
+*   Hi %firstName% %lastName%! -> Hi Jacob Smith!
 
 ```javascript
 var emailAdapter =
