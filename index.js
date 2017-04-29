@@ -28,11 +28,30 @@ Click here to reset it:
 // the error for intializing an adapter without an email
 var ERR_MISSING_EMAIL = Error('parse-server-sendmail-template-adapter requires a fromAddress.');
 
+// the value that surrounds a variable in a template.
+// i.e. if the DELIMITER is %, then a value like %firstName% in a template
+//      will be replaced with options.user.get("firstName")
+var DELIMITER = '%';
+
+// keys for immutable items in the options to decode into templates
+var APPNAME = 'appname';
+var LINK = 'link';
+// the keys for parse user objects to decode into templates by default
+var USERNAME = 'username';
+var EMAIL = 'email';
+
 // setup a new adapter with the given options
 var SendmailTemplateAdapter = sendmailOptions =>
 {
 	// ensure a from address is supplied
 	if (!sendmailOptions.fromAddress) throw ERR_MISSING_EMAIL;
+
+	// the array of fields to get from the user object and replace in templates
+	var userFields = [USERNAME, EMAIL];
+	// append any user supplied items
+	userFields.push.apply(userFields, sendmailOptions.userFields);
+	// replace the array with the appended array
+	sendmailOptions.userFields = userFields;
 
 	/**
 	 * Try to open body as if it were a file and return the contents, otherwise
@@ -58,6 +77,17 @@ var SendmailTemplateAdapter = sendmailOptions =>
 	sendmailOptions.passwordResetBody = openReplace(sendmailOptions.passwordResetBody, PWRD_BODY);
 
 	/**
+	 * Return the text surrounded by the delimiter
+	 * @param  {string} text the text to surround with the delimiter
+	 * @return {string} the text surrounded by the delimiter.
+	 *                  i.e. -> delimiter + text + delimiter
+	 */
+	function delimited(text)
+	{
+		return `${DELIMITER}${text}${DELIMITER}`;
+	}
+
+	/**
 	 * Replace the variables in the string with the given data options and
 	 * return the new string.
 	 * @param  {string}  text the text whomst've text to replace
@@ -66,11 +96,14 @@ var SendmailTemplateAdapter = sendmailOptions =>
 	 */
 	function fillVariables(text, options)
 	{
-		text = text.replace("%username%", options.user.get("username"));
-		text = text.replace("%email%", options.user.get("email"));
-		text = text.replace("%firstName%", options.user.get("firstName"));
-		text = text.replace("%appname%", options.appName);
-		text = text.replace("%link%", options.link);
+		// replace application items
+		text = text.replace(delimited(APPNAME), options.appName);
+		text = text.replace(delimited(LINK), options.link);
+		// replace user based items
+		sendmailOptions.userFields.forEach(function(key) {
+		    text = text.replace(delimited(key), options.user.get(key) || '');
+		});
+
 		return text;
 	}
 
@@ -159,6 +192,8 @@ var SendmailTemplateAdapter = sendmailOptions =>
 	return Object.freeze(
 	{
 		options: sendmailOptions,
+		delimited: delimited,
+		fillVariables: fillVariables,
 		sendVerificationEmail: sendVerificationEmail,
 		sendPasswordResetEmail: sendPasswordResetEmail,
 		sendMail: sendMail

@@ -1,6 +1,6 @@
 {
     "name": "parse-server-sendmail-template-adapter",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Used to send Parse Server emails though sendmail using HTML templates",
     "main": "index.js",
     "scripts":
@@ -40,6 +40,7 @@
     },
     "devDependencies":
     {
+        "parse": "*",
         "mocha": "*",
         "chai": "*",
         "plato": "*",
