@@ -47,6 +47,7 @@ The initializer takes a single object parameter with the following fields:
 | `verificationBody`     | the body for new account verification emails (inline text or a filename) |
 | `passwordResetSubject` | the subject for password reset emails                                    |
 | `passwordResetBody`    | the body for password reset emails (inline text or a filename)           |
+| `userFields`           | the custom items from the user object to pull for use in templates       |
 
 `fromAddress` is the only required field to get setup.
 
@@ -130,6 +131,27 @@ var emailAdapter =
 
         Click here to reset it:
         %link%`
+    }
+};
+```
+
+#### Example using custom user fields ####
+
+This example uses custom fields from the user object in its templates. to access
+the values in `userField` in a template surround it with %s. i.e. if a user is sent
+an email using the following template it would be replaced with items from the
+receiving users object. i.e for the theoretical parse user Jacob Smith:
+
+Hi %firstName% %lastName%! -> Hi Jacob Smith!
+
+```javascript
+var emailAdapter =
+{
+    module: require('parse-server-sendmail-template-adapter'),
+    options:
+    {
+        fromAddress: 'noreply@test.domain.com',
+        userFields: ["firstName", "lastName"]
     }
 };
 ```
